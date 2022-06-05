@@ -24,11 +24,26 @@
         this.speed_x = 3;
         this.board = board;
         this.direction = 1;
-    
-     
+        this.bounce_angle = 0;
+        
+
+        board.ball = this;
+        this.kind = "circle";
 
     }
-   
+    self.Ball.prototype = {
+        move: function () {
+            this.x += (this.speed_x * this.direction);
+            this.y += (this.speed_y);
+        },
+        get width() {
+            return this.radius * 2;
+        },
+        get height() {
+            return this.radius * 2;
+        },
+       
+    }
 })();
 (function () {
     self.Bar = function (x, y, width, height, board) {
@@ -73,18 +88,27 @@
                 draw(this.ctx, el);
             }
         },
-        
+        check_collisions: function () {
+            for (var i = this.board.bars.length - 1; i >= 0; i--) {
+                var bar = this.board.bars[i];
+                if (hit(bar, this.board.ball)) {
+                    this.board.ball.collision(bar);
+                }
+
+            }
+        },
         play: function () {
             if (this.board.playing) {
                 this.clean();
                 this.draw();
-               
+                this.board.ball.move();
+                this.check_collisions();
             }
 
         }
 
     }
-  
+   
     function draw(ctx, element) {
         switch (element.kind) {
             case "rectangle":
@@ -127,7 +151,13 @@ document.addEventListener("keydown", function (ev) {
         ev.preventDefault();
         bar2.down();
     }
-    
+    else if (ev.keyCode === 32) {
+        ev.preventDefault();
+        board.playing = !board.playing;
+    }
+    setTimeout(function () {
+        ball.direction = -1;
+    }, 4000)
 });
 
 window.requestAnimationFrame(controller);
