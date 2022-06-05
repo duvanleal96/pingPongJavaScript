@@ -1,3 +1,6 @@
+/**
+ * funcion anonima , de crea lapista de juego 
+ */
 (function () {
     self.Board = function (width, height) {
         this.width = width;
@@ -15,6 +18,10 @@
         }
     }
 })();
+/**
+ * esta funcion implementa el diseño de la pelota de ping pon,implementa las funciones de colision
+ * tamaño y velocidad de movimiento de la pelota 
+ */
 (function () {
     self.Ball = function (x, y, radius, board) {
         this.x = x;
@@ -56,6 +63,9 @@
         }
     }
 })();
+/**
+ * funcion barras del juego , se implementas funciones de movimiento, diseño y colision con la pelota
+ */
 (function () {
     self.Bar = function (x, y, width, height, board) {
         this.x = x;
@@ -80,6 +90,9 @@
         }
     }
 })();
+/**
+ * funcion vista pista , implementa funciones de mostrar acciones , movimiento de la pelota en ejes x,y
+ */
 (function () {
     self.BoardView = function (canvas, board) {
         this.canvas = canvas;
@@ -151,6 +164,9 @@
 
 
 })();
+/**
+ * variables barras y pelota , representa las dimensiones de los objetos 
+ */
 var board = new Board(800, 400);
 var bar = new Bar(20, 100, 40, 100, board)
 var bar2 = new Bar(740, 100, 40, 100, board)
@@ -158,7 +174,9 @@ var canvas = document.getElementById("canvas");
 var boardview = new BoardView(canvas, board);
 var ball = new Ball(350, 100, 10, board);
 
-
+/**
+ * funcion evento de teclado , implementa el movimiento de las barras con las teclas  
+ */
 document.addEventListener("keydown", function (ev) {
 
     if (ev.keyCode == 38) {
